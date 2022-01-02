@@ -1,16 +1,9 @@
 # drone
 
-A new Flutter project.
+Repo for drone flutter app diy project.
 
-## Getting Started
+Others repos include:
+- [Drone CAD](https://github.com/mochetti/drone_cad) - for KiCAD PCB files
+- [Drone Embedded](https://github.com/mochetti/drone_embedded) - for ESP32 embedded files
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Suggestions are welcome. Open an issue [here.](https://github.com/mochetti/drone_app/issues/new)
