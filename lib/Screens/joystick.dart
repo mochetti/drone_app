@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/physics.dart';
 import 'package:drone/Utils/websocket.dart';
 import 'package:flutter/services.dart';
-// import 'package:Tampi/Utils/bottle_cap_button_widget.dart';
 
 class JoystickPage extends StatefulWidget {
   const JoystickPage({Key? key}) : super(key: key);
@@ -39,31 +38,45 @@ class _JoystickPageState extends State<JoystickPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.greenAccent,
-      appBar: AppBar(
-        title: const Text('Joystick'),
-      ),
-      body: Row(
+      body: Column(
         children: [
-          RotatedBox(
-            quarterTurns: 1,
-            child: Slider(
-              value: 50,
-              onChanged: (newValue) {
-                Null;
-              },
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: DraggableCard(
+                    child: Container(
+                      width: 150.0,
+                      height: 150.0,
+                      decoration: const BoxDecoration(
+                        color: Colors.orange,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  child: DraggableCard(
+                    child: Container(
+                      width: 150.0,
+                      height: 150.0,
+                      decoration: const BoxDecoration(
+                        color: Colors.orange,
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          DraggableCard(
-            child: Container(
-              width: 150.0,
-              height: 150.0,
-              decoration: const BoxDecoration(
-                color: Colors.orange,
-                shape: BoxShape.circle,
-              ),
-              child: const Text('Direction'),
-            ),
-          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Text("Altitude:"), Text("20"), Text("m")],
+          )
         ],
       ),
     );
@@ -88,7 +101,7 @@ class DraggableCard extends StatefulWidget {
 class _DraggableCardState extends State<DraggableCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  WebSocketsNotifications sockets = new WebSocketsNotifications();
+  WebSocketsNotifications sockets = WebSocketsNotifications();
 
   /// The alignment of the card as it is dragged or being animated.
   ///
@@ -153,33 +166,22 @@ class _DraggableCardState extends State<DraggableCard>
       onPanUpdate: (details) {
         setState(() {
           _dragAlignment += Alignment(
-            details.delta.dx / (size.width / 2),
+            details.delta.dx / (size.width / 3),
             details.delta.dy / (size.height / 2),
           );
         });
-
-        double x = details.globalPosition.dx * 100 / size.width;
+        double x = details.globalPosition.dx * 200 / size.width;
         double y = details.globalPosition.dy * 100 / size.height;
-        double m1;
-        double m2;
-
-        if (x > 70) {
-          // vira pra direita
-          m1 = 700;
-          m2 = -700;
-        } else if (x < 30) {
-          // vira pra direita
-          m1 = -700;
-          m2 = 700;
+        String s = "";
+        if (x > 100) {
+          s += 'm';
+          x = x - 100;
         } else {
-          m1 = y * -1 * 2046 / 100 + 1023;
-          m2 = y * -1 * 2046 / 100 + 1023;
+          s += 'r';
         }
-
-        String s = 'm'; // caracter de inicio de movimento
-        s += m1.toStringAsFixed(0);
+        s += x.toString();
         s += ':';
-        s += m2.toStringAsFixed(0);
+        s += y.toString();
         s += 'e';
         print(s);
         sockets.send(s);
@@ -201,4 +203,11 @@ class _DraggableCardState extends State<DraggableCard>
       ),
     );
   }
+}
+
+class WSPackage {
+  double vertical = 0;
+  double horizontal = 0;
+  double altitude = 0;
+  double rotation = 0;
 }

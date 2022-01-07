@@ -21,7 +21,7 @@ class WebSocketsNotifications {
 
   WebSocketsNotifications._internal();
 
-  late IOWebSocketChannel _channel; // canal do websocket
+  IOWebSocketChannel? _channel; // canal do websocket
 
   bool isOn = false; // controla se a conexao existe
 
@@ -50,7 +50,7 @@ class WebSocketsNotifications {
       ///
       /// Start listening to new notifications / messages
       ///
-      _channel.stream.listen(
+      _channel?.stream.listen(
         _onReceptionOfMessageFromServer,
         onDone: () {
           // conexao destruida
@@ -84,8 +84,8 @@ class WebSocketsNotifications {
   /// ----------------------------------------------------------
   reset() {
     if (_channel != null) {
-      if (_channel.sink != null) {
-        _channel.sink.close();
+      if (_channel?.sink != null) {
+        _channel?.sink.close();
         isOn = false;
       }
     }
@@ -96,8 +96,8 @@ class WebSocketsNotifications {
   /// ---------------------------------------------------------
   send(String message) {
     if (_channel != null) {
-      if (_channel.sink != null && isOn) {
-        _channel.sink.add(message);
+      if (_channel?.sink != null && isOn) {
+        _channel?.sink.add(message);
       }
     }
   }

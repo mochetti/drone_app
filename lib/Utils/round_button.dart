@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'color_utils.dart';
 
-ButtonTheme roundButton({
+Container roundButton({
   required VoidCallback onClick,
   String? text,
   Color? textColor,
@@ -13,16 +13,10 @@ ButtonTheme roundButton({
   double leadingIconMargin = 0,
   Widget? leadingIcon,
 }) {
-  return ButtonTheme(
-    // minWidth: minWidth,
+  return Container(
     height: height,
     child: ElevatedButton(
         style: ButtonStyle(
-          textStyle: MaterialStateProperty.resolveWith<TextStyle>((_) {
-            return const TextStyle(
-              color: Colors.white,
-            );
-          }),
           backgroundColor: MaterialStateProperty.resolveWith<Color>((_) {
             return Colors.white;
           }),
@@ -40,7 +34,7 @@ ButtonTheme roundButton({
             Text(
               text ?? '',
               style: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: textFontSize,
                 fontWeight: FontWeight.w500,
                 fontStyle: FontStyle.normal,

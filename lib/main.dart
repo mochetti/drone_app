@@ -3,7 +3,7 @@ import 'package:drone/Screens/menu.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:drone/Utils/websocket.dart';
-
+import 'package:drone/Screens/joystick.dart';
 import 'package:network_info_plus/network_info_plus.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 // import 'package:Tampi/Screens/instrucoesConexaoPage.dart';
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         // '/logo': (BuildContext context) => new LogoAnimator(),
         '/home': (BuildContext context) => Home(),
         '/menu': (BuildContext context) => MenuPage(),
-        // '/joystick': (BuildContext context) => JoystickPage(),
+        '/joystick': (BuildContext context) => JoystickPage(),
       },
     );
   }
@@ -82,6 +82,7 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
   Widget _buildConnectButton() {
     return roundButton(
       text: 'Connect',
+      height: 100,
       onClick: () async {
         print('conectando...');
         // checa se estamos num wifi
@@ -106,6 +107,7 @@ class _Home extends State<Home> with SingleTickerProviderStateMixin {
           // tenta abrir o websocket
           print('tentando conectar');
           sockets.initCommunication();
+          print('oi');
           sockets.addListener(_onMessageReceived);
           // debug
           // _onMessageReceived('welcome');
